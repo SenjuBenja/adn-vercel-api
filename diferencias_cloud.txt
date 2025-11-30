@@ -1,0 +1,5 @@
+Total de diferencias: 1
+
+=== Diferencia en línea 1 ===
+A: ACGTACGT
+B: ACGTTTGT
