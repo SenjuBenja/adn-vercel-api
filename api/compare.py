@@ -4068,16 +4068,23 @@ class handler(BaseHTTPRequestHandler):
     #                  GET — INCLUYE MODO DEMO
     # ------------------------------------------------------
     def do_GET(self):
+        # Si es el demo: /api/compare?demo=1
         if self.path.startswith("/api/compare") and "demo" in self.path:
+            # construimos el reporte con las secuencias pegadas
             report = build_diff_report(DEMO_SEQ_A, DEMO_SEQ_B)
-            return self._send_json({"demo_report": report})
+            # mandamos CABECERAS de archivo de texto descargable
+            self._set_headers_file()
+            # escribimos el contenido del reporte
+            self.wfile.write(report.encode("utf-8"))
+            return
 
-        # respuesta por defecto
-        return self._send_json({
-            "message": "API de comparación de ADN (usa POST para comparar).",
-            "usage": "POST /api/compare  con JSON: {\"seqA\": \"...\", \"seqB\": \"...\"}",
-            "demo": "GET /api/compare?demo=1"
+        # Respuesta normal de ayuda (JSON)
+        self._send_json({
+            "message": "API de comparación de ADN (usa POST para /api/compare).",
+            "usage": "POST /api/compare con JSON: {\"seqA\": \"...\", \"seqB\": \"...\"}",
+            "demo": "GET /api/compare?demo=1 para descargar un ejemplo con fragmentos reales"
         })
+
 
     # ------------------------------------------------------
     #                     POST — ARCHIVO
