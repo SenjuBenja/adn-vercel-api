@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Entornos virtuales
+venv/
+.env/
+.venv/
+
+# Archivos temporales
+*.log
+*.tmp
+
+# Archivos de prueba
+diferencias_local.txt
